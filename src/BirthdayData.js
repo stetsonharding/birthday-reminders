@@ -4,7 +4,7 @@ import Zara from "./Assets/Zara.jpg"
 import Zach from "./Assets/Zach.jpg"
 import Lacey from "./Assets/Lacey.jpg"
 
- const birthdayData = [
+ export default  [
     {
         Name: "Krystal",
         AgeTurning: 29,
@@ -30,7 +30,8 @@ import Lacey from "./Assets/Lacey.jpg"
         AgeTurning: 36,
         image: Lacey
     }
- 
+
+   
 ]
 
-export default birthdayData
+// export default BirthdayData

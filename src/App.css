@@ -1,5 +1,13 @@
 .birthdays-container {
 width: 600px;
-height: 700px;
+
+max-height: 800px;
+overflow: auto;
+
+height: fit-content;
 background-color: white;
+display: flex;
+justify-content: center;
+
+flex-direction: column;
 }
