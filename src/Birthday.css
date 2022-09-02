@@ -1,7 +1,8 @@
 .birthday-flex-container {
     display: flex;
     height: 120px;
-    width: 400px;
+    width: 100%;
+    
 }
 
 /* User Image */

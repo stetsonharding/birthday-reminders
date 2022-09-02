@@ -16,7 +16,7 @@ function App() {
       <div style={{minHeight: '550px', height:"fit-content"}}>
       {Birthdayz.length > 1 ? Birthdayz.map((user, index) => {
         return <Birthdays
-          key={index}
+          key={user.id}
           selfie={user.image}
           name={user.Name}
           age={user.AgeTurning}
@@ -27,8 +27,9 @@ function App() {
      
     </div>
 
-<div>
-<button onClick={() => setBirthdays(0)}  >Clear</button>
+<div style={{display: 'flex', height: '30px', marginTop: '10px', justifyContent: 'center'}}>
+<button className='btn' onClick={() => setBirthdays([])}>Clear</button>
+<button  className='btn'>Add Birthday</button>
 </div>
 </>
   );
