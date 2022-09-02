@@ -1,0 +1,36 @@
+.birthday-flex-container {
+    display: flex;
+    height: 120px;
+    width: 400px;
+}
+
+/* User Image */
+.image-container {
+    margin: 15px;
+}
+
+.user-image {
+    border-radius: 50%;
+    width: 85px;
+    height: 85px;
+    box-shadow: .5px .5px .5px black;
+}
+
+/* User Info */
+.user-info {
+    display: flex;
+    justify-content: center;
+    flex-direction: column
+}
+
+.age {
+    font-style: italic;
+    margin: 0;
+}
+
+.name {
+    font-size: 20px;
+    letter-spacing: 1px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 0;
+}
