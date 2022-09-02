@@ -9,17 +9,28 @@ function App() {
 
   const [Birthdayz, setBirthdays] = useState([...BirthayData])
 
+  const DeleteBirthday = (indx) => {
+
+Birthdayz.splice(indx, 1)
+
+setBirthdays([...Birthdayz])
+
+console.log(Birthdayz)
+  }
+
   return (
     <>
     <div className="birthdays-container">
       <h2 style={{ textAlign: 'center', fontFamily: 'cursive' }}>{Birthdayz.length} Birthdays Today</h2>
       <div style={{minHeight: '550px', height:"fit-content"}}>
-      {Birthdayz.length > 1 ? Birthdayz.map((user, index) => {
+      {Birthdayz.length >= 1 ? Birthdayz.map((user, index) => {
         return <Birthdays
           key={user.id}
           selfie={user.image}
           name={user.Name}
           age={user.AgeTurning}
+          deleteBirthday={DeleteBirthday}
+          index={index}
         />
       }) : null } 
      

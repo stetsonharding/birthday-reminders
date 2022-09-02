@@ -35,3 +35,28 @@
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     margin: 0;
 }
+
+/* Delete Birthday */
+
+.delete-birthday-container {
+    
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    
+   
+}
+
+.delete-birthday-container span{
+    padding: 15px;
+    font-size: 20px;
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
+    color: black
+}
+
+.delete-birthday-container span:hover{
+    color: red;
+}

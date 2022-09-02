@@ -17,6 +17,9 @@ return (
         <h4 className="name">{props.name}</h4>
         <span className="age">{props.age} years</span>
         </div>
+        <div className="delete-birthday-container">
+           <span onClick={() => props.deleteBirthday(props.index)}>X</span>
+        </div>
        
     </div>
 )
