@@ -2,47 +2,48 @@ import { useState } from 'react';
 import './App.css';
 import Birthdays from './Birthdays';
 import BirthayData from './BirthdayData'
+import AddBirthdayModal from './AddBirthdayModal';
 
 
 
 function App() {
+//Keeping track of all birthdays
+  const [allBirthdays, setAllBirthdays] = useState([...BirthayData])
+  //keeping track if add birthday modal is displayed
+  const [isAddBirthdayShown, setIsAddBirthdayShown] = useState(false)
 
-  const [Birthdayz, setBirthdays] = useState([...BirthayData])
-
+//Delete selected birthday by index and reset new birthday array.
   const DeleteBirthday = (indx) => {
-
-Birthdayz.splice(indx, 1)
-
-setBirthdays([...Birthdayz])
-
-console.log(Birthdayz)
+    allBirthdays.splice(indx, 1)
+    setAllBirthdays([...allBirthdays])
   }
 
   return (
     <>
-    <div className="birthdays-container">
-      <h2 style={{ textAlign: 'center', fontFamily: 'cursive' }}>{Birthdayz.length} Birthdays Today</h2>
-      <div style={{minHeight: '550px', height:"fit-content"}}>
-      {Birthdayz.length >= 1 ? Birthdayz.map((user, index) => {
-        return <Birthdays
-          key={user.id}
-          selfie={user.image}
-          name={user.Name}
-          age={user.AgeTurning}
-          deleteBirthday={DeleteBirthday}
-          index={index}
-        />
-      }) : null } 
-     
-     </div>
-     
-    </div>
+    <AddBirthdayModal isAddBirthdayShown={isAddBirthdayShown} setIsAddBirthdayShown={setIsAddBirthdayShown} />
+      <div className="birthdays-container">
+        <h2 style={{ textAlign: 'center', fontFamily: 'cursive' }}>{allBirthdays.length} Birthdays Today</h2>
+        <div style={{ minHeight: '550px', height: "fit-content" }}>
+          {allBirthdays.length >= 1 ? allBirthdays.map((user, index) => {
+            return <Birthdays
+              key={user.id}
+              selfie={user.image}
+              name={user.Name}
+              age={user.AgeTurning}
+              deleteBirthday={DeleteBirthday}
+              index={index}
+            />
+          }) : null}
 
-<div style={{display: 'flex', height: '30px', marginTop: '10px', justifyContent: 'center'}}>
-<button className='btn' onClick={() => setBirthdays([])}>Clear</button>
-<button  className='btn'>Add Birthday</button>
-</div>
-</>
+        </div>
+
+      </div>
+
+      <div style={{ display: 'flex', height: '30px', marginTop: '10px', justifyContent: 'center' }}>
+        <button className='btn' onClick={() => setAllBirthdays([])}>Clear</button>
+        <button className='btn' onClick={() => setIsAddBirthdayShown(true)}>Add Birthday</button>
+      </div>
+    </>
   );
 }
 

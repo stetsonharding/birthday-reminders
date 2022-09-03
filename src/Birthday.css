@@ -2,7 +2,7 @@
     display: flex;
     height: 120px;
     width: 100%;
-    
+
 }
 
 /* User Image */
@@ -27,6 +27,7 @@
 .age {
     font-style: italic;
     margin: 0;
+    font-weight: 500;
 }
 
 .name {
@@ -34,29 +35,29 @@
     letter-spacing: 1px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     margin: 0;
+    color: rgb(214, 64, 89);
+    font-weight: bold;
 }
 
 /* Delete Birthday */
 
 .delete-birthday-container {
-    
-    width: 100%;
+    width: 70%;
     display: flex;
     justify-content: right;
     align-items: center;
-    
-   
 }
 
-.delete-birthday-container span{
+.delete-birthday-container span {
     padding: 15px;
     font-size: 20px;
     color: red;
     font-weight: bold;
     cursor: pointer;
-    color: black
+    color: black;
 }
 
-.delete-birthday-container span:hover{
+.delete-birthday-container span:hover {
     color: red;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
