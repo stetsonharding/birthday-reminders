@@ -47,14 +47,7 @@ function App() {
         </div>
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          height: "30px",
-          marginTop: "10px",
-          justifyContent: "center",
-        }}
-      >
+      <div className="btns-container">
         <button className="btn" onClick={() => setAllBirthdays([])}>
           Clear
         </button>
