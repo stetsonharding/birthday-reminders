@@ -19,10 +19,13 @@ function App() {
 
   return (
     <>
-      <AddBirthdayModal
-        setIsAddBirthdayShown={setIsAddBirthdayShown}
-        isAddBirthdayShown={isAddBirthdayShown}
-      />
+      {isAddBirthdayShown && (
+        <AddBirthdayModal
+          setIsAddBirthdayShown={setIsAddBirthdayShown}
+          isAddBirthdayShown={isAddBirthdayShown}
+        />
+      )}
+
       <div className="birthdays-container">
         <h2 style={{ textAlign: "center", fontFamily: "cursive" }}>
           {allBirthdays.length} Birthdays Today
@@ -36,8 +39,7 @@ function App() {
                     selfie={user.image}
                     name={user.Name}
                     age={user.AgeTurning}
-                    deleteBirthday={DeleteBirthday}
-                    index={index}
+                    deleteBirthday={() => DeleteBirthday(index)}
                   />
                 );
               })
