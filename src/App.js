@@ -17,12 +17,15 @@ function App() {
     setAllBirthdays(updatedBirthdays);
   };
 
+
+
   return (
     <>
       {isAddBirthdayShown && (
         <AddBirthdayModal
           setIsAddBirthdayShown={setIsAddBirthdayShown}
           isAddBirthdayShown={isAddBirthdayShown}
+          setAllBirthdays={setAllBirthdays}
         />
       )}
 

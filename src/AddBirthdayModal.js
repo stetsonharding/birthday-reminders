@@ -1,7 +1,34 @@
-import React from "react";
+import React, {useState} from "react";
 import "./AddBirthdayModal.css";
 
-function AddBirthdayModal({ setIsAddBirthdayShown, isAddBirthdayShown }) {
+function AddBirthdayModal({ setIsAddBirthdayShown, isAddBirthdayShown, setAllBirthdays }) {
+
+  const [name, setName] = useState("")
+  const [date, setDate] = useState();
+  const [img, setImg] = useState()
+
+
+  
+
+const newBirthday = {
+  id:6,
+  Name: name,
+  AgeTurning: date,
+  image: img
+}
+
+
+
+function addBirthday(e) {
+e
+  setAllBirthdays((prevState) => [...prevState, newBirthday])
+
+ setIsAddBirthdayShown(false)
+
+}
+
+
+
   return (
     <div className="modal-container">
       <div className="modal">
@@ -9,13 +36,13 @@ function AddBirthdayModal({ setIsAddBirthdayShown, isAddBirthdayShown }) {
         <div className="form-container">
           <form className="birthday-form">
             <label htmlfor="name">Name:</label>
-            <input id="name" type="text" placeholder="Name" />
+            <input id="name" type="text" placeholder="Name" onChange={(e) => setName(e.target.value)}  />
             <br />
             <label htmlfor="birthday">Birthday:</label>
-            <input type="date" id="birthday" name="birthday" />
+            <input type="date" id="birthday" name="birthday" onChange={(e) => setDate(e.target.value)} />
             <br />
             <label htmlfor="myfile">Select a Image: </label>
-            <input type="file" id="myfile" name="myfile" />
+            <input type="file" id="myfile" name="myfile" onChange={(e) => setImg(e.target.value)} />
             <br />
             <div style={{ margin: "0 auto" }}>
               <button
@@ -26,7 +53,7 @@ function AddBirthdayModal({ setIsAddBirthdayShown, isAddBirthdayShown }) {
               </button>
               <button
                 className="form-btn"
-                onClick={() => setIsAddBirthdayShown(!isAddBirthdayShown)}
+                onClick={addBirthday}
               >
                 Add
               </button>
