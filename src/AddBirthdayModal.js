@@ -1,33 +1,37 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./AddBirthdayModal.css";
 
-function AddBirthdayModal({ setIsAddBirthdayShown, isAddBirthdayShown, setAllBirthdays }) {
+function AddBirthdayModal({
+  setIsAddBirthdayShown,
+  isAddBirthdayShown,
+  setAllBirthdays,
+}) {
+  const [name, setName] = useState("");
+  const [date, setDate] = useState("");
+  const [img, setImg] = useState();
 
-  const [name, setName] = useState("")
-  const [date, setDate] = useState();
-  const [img, setImg] = useState()
+  let usersNewAge = 0;
+  //Calculate age user is turning.
+  function calculateAgeTurning() {
+    let usersBirthday = date;
+    let usersYearBorn = usersBirthday.substring(0, 4);
+    usersNewAge = new Date().getFullYear() - usersYearBorn;
+  }
 
+  function addBirthday() {
+    calculateAgeTurning();
 
-  
+    const newBirthday = {
+      id: 11,
+      Name: name,
+      AgeTurning: usersNewAge,
+      image: img,
+    };
 
-const newBirthday = {
-  id:6,
-  Name: name,
-  AgeTurning: date,
-  image: img
-}
+    setAllBirthdays((prevState) => [...prevState, newBirthday]);
 
-
-
-function addBirthday(e) {
-e
-  setAllBirthdays((prevState) => [...prevState, newBirthday])
-
- setIsAddBirthdayShown(false)
-
-}
-
-
+    setIsAddBirthdayShown(false);
+  }
 
   return (
     <div className="modal-container">
@@ -35,14 +39,29 @@ e
         <p className="modal-title">Who's Birthday?</p>
         <div className="form-container">
           <form className="birthday-form">
-            <label htmlfor="name">Name:</label>
-            <input id="name" type="text" placeholder="Name" onChange={(e) => setName(e.target.value)}  />
+            <label htmlFor="name">Name:</label>
+            <input
+              id="name"
+              type="text"
+              placeholder="Name"
+              onChange={(e) => setName(e.target.value)}
+            />
             <br />
-            <label htmlfor="birthday">Birthday:</label>
-            <input type="date" id="birthday" name="birthday" onChange={(e) => setDate(e.target.value)} />
+            <label htmlFor="birthday">Birthday:</label>
+            <input
+              type="date"
+              id="birthday"
+              name="birthday"
+              onChange={(e) => setDate(e.target.value)}
+            />
             <br />
-            <label htmlfor="myfile">Select a Image: </label>
-            <input type="file" id="myfile" name="myfile" onChange={(e) => setImg(e.target.value)} />
+            <label htmlFor="myfile">Select a Image: </label>
+            <input
+              type="file"
+              id="myfile"
+              name="myfile"
+              onChange={(e) => setImg(e.target.value)}
+            />
             <br />
             <div style={{ margin: "0 auto" }}>
               <button
@@ -51,10 +70,7 @@ e
               >
                 Close
               </button>
-              <button
-                className="form-btn"
-                onClick={addBirthday}
-              >
+              <button className="form-btn" onClick={addBirthday}>
                 Add
               </button>
             </div>
