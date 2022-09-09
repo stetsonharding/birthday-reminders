@@ -10,6 +10,8 @@ function AddBirthdayModal({
   const [date, setDate] = useState("");
   const [img, setImg] = useState();
 
+  const { v1: uuidv1 } = require("uuid");
+
   let usersNewAge = 0;
   //Calculate age user is turning.
   function calculateAgeTurning() {
@@ -22,7 +24,7 @@ function AddBirthdayModal({
     calculateAgeTurning();
 
     const newBirthday = {
-      id: 11,
+      id: uuidv1(),
       Name: name,
       AgeTurning: usersNewAge,
       image: img,
