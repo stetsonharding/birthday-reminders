@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "./AddBirthdayModal.css";
 
+import { storage } from "./firebase";
+import { ref, uploadBytes } from "firebase/storage";
+
 function AddBirthdayModal({
   setIsAddBirthdayShown,
   isAddBirthdayShown,
@@ -8,7 +11,7 @@ function AddBirthdayModal({
 }) {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
-  const [img, setImg] = useState();
+  const [imgUpload, setImgUpload] = useState();
 
   const { v1: uuidv1 } = require("uuid");
 
@@ -23,11 +26,18 @@ function AddBirthdayModal({
   function addBirthday() {
     calculateAgeTurning();
 
+    if (imgUpload !== null) {
+      const imageRef = ref(storage, `images/${imgUpload.name + uuidv1()}`);
+      uploadBytes(imageRef, imgUpload).then(() => {
+        alert("image uploaded");
+      });
+    }
+
     const newBirthday = {
       id: uuidv1(),
       Name: name,
       AgeTurning: usersNewAge,
-      image: img,
+      image: imgUpload,
     };
 
     setAllBirthdays((prevState) => [...prevState, newBirthday]);
@@ -62,7 +72,7 @@ function AddBirthdayModal({
               type="file"
               id="myfile"
               name="myfile"
-              onChange={(e) => setImg(e.target.value)}
+              onChange={(e) => setImgUpload(e.target.files[0])}
             />
             <br />
             <div style={{ margin: "0 auto" }}>
