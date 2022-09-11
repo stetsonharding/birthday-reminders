@@ -17,8 +17,6 @@ function App() {
     setAllBirthdays(updatedBirthdays);
   };
 
-  console.log(allBirthdays);
-
   return (
     <>
       {isAddBirthdayShown && (
