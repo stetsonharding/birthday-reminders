@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./AddBirthdayModal.css";
 
 import { storage } from "./firebase";
-import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 function AddBirthdayModal({
   setIsAddBirthdayShown,
@@ -12,25 +12,43 @@ function AddBirthdayModal({
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [imgUpload, setImgUpload] = useState("");
-
-  const [test, setTest] = useState("");
+  const [progress, setProgress] = useState();
+  const [test, setTest] = useState();
 
   const { v1: uuidv1 } = require("uuid");
-  const imageListRef = ref(storage, "images/");
 
-  useEffect(() => {
-    listAll(imageListRef).then((res) => {
-      res.items.forEach((item) => {
-        // console.log(item._location.path_);
-        // console.log("images/" + imgUpload.name);
-        if (item._location.path_ == "images/" + imgUpload.name) {
-          getDownloadURL(item).then((url) => {
-            setTest(url);
-          });
-        }
-      });
-    });
-  }, [imageListRef, imgUpload.name]);
+  // const imageListRef = ref(storage, "images/");
+
+  const uploadFiles = (file) => {
+    if (!file) return;
+    const storageRef = ref(storage, "images/");
+    console.log(storageRef);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const prog = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(prog);
+      },
+      (error) => console.log(error),
+
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          addBirthday(downloadURL); // 👈 but instead call it here
+        });
+      }
+    );
+  };
+
+  function formHandler(e) {
+    e.preventDefault();
+    const file = e.target.files[0];
+
+    uploadFiles(file);
+  }
 
   let usersNewAge = 0;
   //Calculate age user is turning.
@@ -40,22 +58,14 @@ function AddBirthdayModal({
     usersNewAge = new Date().getFullYear() - usersYearBorn;
   }
 
-  function addBirthday() {
+  function addBirthday(url) {
     calculateAgeTurning();
-
-    if (imgUpload !== null) {
-      let imageRef = ref(storage, `images/${imgUpload.name}`);
-
-      uploadBytes(imageRef, imgUpload).then(() => {
-        alert("image uploaded");
-      });
-    }
 
     const newBirthday = {
       id: uuidv1(),
       Name: name,
       AgeTurning: usersNewAge,
-      image: test,
+      image: url,
     };
 
     setAllBirthdays((prevState) => [...prevState, newBirthday]);
@@ -90,7 +100,7 @@ function AddBirthdayModal({
               type="file"
               id="myfile"
               name="myfile"
-              onChange={(e) => setImgUpload(e.target.files[0])}
+              onChange={(e) => formHandler(e)}
             />
             <br />
             <div style={{ margin: "0 auto" }}>
@@ -100,6 +110,7 @@ function AddBirthdayModal({
               >
                 Close
               </button>
+              {/* Fix bug for add Birthday */}
               <button className="form-btn" onClick={addBirthday}>
                 Add
               </button>
