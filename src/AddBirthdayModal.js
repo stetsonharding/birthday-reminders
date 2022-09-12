@@ -11,13 +11,10 @@ function AddBirthdayModal({
 }) {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
-  const [imgUpload, setImgUpload] = useState("");
+  // const [imgUpload, setImgUpload] = useState();
   const [progress, setProgress] = useState();
-  const [test, setTest] = useState();
 
   const { v1: uuidv1 } = require("uuid");
-
-  // const imageListRef = ref(storage, "images/");
 
   const uploadFiles = (file) => {
     if (!file) return;
@@ -77,6 +74,7 @@ function AddBirthdayModal({
     <div className="modal-container">
       <div className="modal">
         <p className="modal-title">Who's Birthday?</p>
+        {progress && <p style={{ textAlign: "center" }}>{progress}%</p>}
         <div className="form-container">
           <form className="birthday-form">
             <label htmlFor="name">Name:</label>
