@@ -9,12 +9,18 @@ function AddBirthdayModal({
   isAddBirthdayShown,
   setAllBirthdays,
 }) {
+  const { v1: uuidv1 } = require("uuid");
+
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
-  // const [imgUpload, setImgUpload] = useState();
   const [progress, setProgress] = useState();
 
-  const { v1: uuidv1 } = require("uuid");
+  function formHandler(e) {
+    e.preventDefault();
+    const file = e.target.files[0];
+
+    uploadFiles(file);
+  }
 
   const uploadFiles = (file) => {
     if (!file) return;
@@ -40,28 +46,19 @@ function AddBirthdayModal({
     );
   };
 
-  function formHandler(e) {
-    e.preventDefault();
-    const file = e.target.files[0];
-
-    uploadFiles(file);
-  }
-
-  let usersNewAge = 0;
-  //Calculate age user is turning.
   function calculateAgeTurning() {
     let usersBirthday = date;
     let usersYearBorn = usersBirthday.substring(0, 4);
-    usersNewAge = new Date().getFullYear() - usersYearBorn;
+    return new Date().getFullYear() - usersYearBorn;
   }
 
   function addBirthday(url) {
-    calculateAgeTurning();
+    const newAge = calculateAgeTurning();
 
     const newBirthday = {
       id: uuidv1(),
       Name: name,
-      AgeTurning: usersNewAge,
+      AgeTurning: newAge,
       image: url,
     };
 
