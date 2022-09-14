@@ -12,33 +12,38 @@ function AddBirthdayModal({
   const { v1: uuidv1 } = require("uuid");
 
   const [name, setName] = useState("");
-  const [date, setDate] = useState("");
+  const [userBirthday, setUserBirthday] = useState("");
   const [progress, setProgress] = useState();
 
+  //Keeping track of users image and passing image file to uploadFiles.
   function formHandler(e) {
     e.preventDefault();
     const file = e.target.files[0];
-
     uploadFiles(file);
   }
 
+  //Getting image from firebase
   const uploadFiles = (file) => {
     if (!file) return;
+
+    //Refrencing image in correct location in firebase.
     const storageRef = ref(storage, "images/");
-    console.log(storageRef);
+    //Keep track of file size
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on(
       "state_changed",
       (snapshot) => {
+        //Keep track of download progress and storing progress in state.
         const prog = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
         setProgress(prog);
       },
+      //Logging error
       (error) => console.log(error),
-
       () => {
+        //Getting the URL of the image and setting it in state.
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           addBirthday(downloadURL); // 👈 but instead call it here
         });
@@ -47,14 +52,16 @@ function AddBirthdayModal({
   };
 
   function calculateAgeTurning() {
-    let usersBirthday = date;
-    let usersYearBorn = usersBirthday.substring(0, 4);
-    return new Date().getFullYear() - usersYearBorn;
+    //Subracting users birth year by the current year to get age.
+    let usersNewAge = new Date().getFullYear() - userBirthday.substring(0, 4);
+    return usersNewAge;
   }
 
   function addBirthday(url) {
-    const newAge = calculateAgeTurning();
+    //getting the returned value and setting it in newBirthday object.
+    let newAge = calculateAgeTurning();
 
+    //New birthday object.
     const newBirthday = {
       id: uuidv1(),
       Name: name,
@@ -62,8 +69,10 @@ function AddBirthdayModal({
       image: url,
     };
 
+    //Adding new birthday to allBirthdays array.
     setAllBirthdays((prevState) => [...prevState, newBirthday]);
 
+    //Closing modal.
     setIsAddBirthdayShown(false);
   }
 
@@ -87,7 +96,7 @@ function AddBirthdayModal({
               type="date"
               id="birthday"
               name="birthday"
-              onChange={(e) => setDate(e.target.value)}
+              onChange={(e) => setUserBirthday(e.target.value)}
             />
             <br />
             <label htmlFor="myfile">Select a Image: </label>
